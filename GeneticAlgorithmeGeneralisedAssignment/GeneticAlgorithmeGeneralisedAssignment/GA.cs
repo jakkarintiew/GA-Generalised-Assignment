@@ -5,7 +5,7 @@ public class GA<T>
 {
     public List<Chromosome<T>> Population { get; private set; }
     public int Generation { get; private set; }
-    public double BestFitness { get; private set; }
+    public int BestFitness { get; private set; }
     public T[] BestGenes { get; private set; }
 
     public int Elitism;
@@ -13,10 +13,9 @@ public class GA<T>
 
     private List<Chromosome<T>> newPopulation;
     private Random random;
-    private double fitnessSum;
     private int chromoSize;
     private Func<T[]> getRandomGenes;
-    private Func<int, double> fitnessFunction;
+    private Func<int, int> fitnessFunction;
 
     // Constructor
     public GA(
@@ -24,7 +23,7 @@ public class GA<T>
         int chromoSize, 
         Random random, 
         Func<T[]> getRandomGenes,
-        Func<int, double> fitnessFunction,
+        Func<int, int> fitnessFunction,
         int elitism, 
         float mutationRate
         )
@@ -60,6 +59,9 @@ public class GA<T>
         {
             CalculateFitness();
             Population.Sort(CompareFitness);
+            //Console.WriteLine("Best: " + Population[0].Fitness);
+            //Console.WriteLine("Worst: " + Population[Population.Count - 1].Fitness);
+
         }
 
         newPopulation.Clear();
@@ -75,10 +77,18 @@ public class GA<T>
             {
                 Chromosome<T> parent1 = ChooseParent();
                 Chromosome<T> parent2 = ChooseParent();
-
                 Chromosome<T> child = parent1.Crossover(parent2);
 
                 child.Mutate(MutationRate);
+
+                //Console.WriteLine("parent1 fitness: " + parent1.Fitness);
+                //Console.WriteLine("parent1 Assignment: [ {0} ]\n", string.Join(", ", parent1.Genes));
+
+                //Console.WriteLine("parent2 fitness: " + parent2.Fitness);
+                //Console.WriteLine("parent2 Assignment: [ {0} ]\n", string.Join(", ", parent2.Genes));
+
+                //Console.WriteLine("child fitness: " + child.Fitness);
+                //Console.WriteLine("child Assignment: [ {0} ]\n\n", string.Join(", ", child.Genes));
 
                 newPopulation.Add(child);
             }
@@ -119,8 +129,6 @@ public class GA<T>
     public void CalculateFitness()
     {
         // initialize fitnessSum to be 0
-        fitnessSum = 0;
-
         // initialize best individual to be the first element of the Population
         Chromosome<T> best = Population[0];
         best.CalculateFitness(0);
@@ -144,19 +152,23 @@ public class GA<T>
     // Chosse parent by randomly choose from Population
     private Chromosome<T> ChooseParent()
     {
-        // Multiply sum of fitnesses with a random number
-        double randomNumber = random.NextDouble() * fitnessSum;
+        // Tournoment selection
+        int num_competitors = 2; // Binary tournoment
+        Chromosome<T> rand_selection;
+        Chromosome<T> best = null;
 
-        for (int i = 0; i < Population.Count; i++)
-        {
-            if (randomNumber < Population[i].Fitness)
+        for (int i = 0; i < num_competitors; i++)
+        {            
+            rand_selection = Population[random.Next(Population.Count)];
+
+            //Console.WriteLine(ind.Fitness);
+
+            if (best == null || rand_selection.Fitness < best.Fitness)
             {
-                return Population[i];
+                best = rand_selection;
             }
-
-            randomNumber -= Population[i].Fitness;
         }
 
-        return null;
+        return best;
     }
 }

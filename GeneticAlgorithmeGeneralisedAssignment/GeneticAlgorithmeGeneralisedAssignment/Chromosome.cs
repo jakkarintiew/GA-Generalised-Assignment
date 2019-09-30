@@ -6,18 +6,18 @@ public class Chromosome<T>
     public T[] Genes { get; private set; }
 
     // Fitness of each individual
-    public double Fitness { get; private set; }
+    public int Fitness { get; private set; }
 
     private Random random;
     private Func<T[]> getRandomGenes;
-    private Func<int, double> fitnessFunction;
+    private Func<int, int> fitnessFunction;
 
     // Construtor
     public Chromosome(
         int size, 
         Random random, 
         Func<T[]> getRandomGenes, 
-        Func<int, double> fitnessFunction, 
+        Func<int, int> fitnessFunction, 
         bool shouldInitGenes = true)
     {
         // Create the Gene array with size
@@ -29,6 +29,7 @@ public class Chromosome<T>
         if (shouldInitGenes)
         {
             Genes = getRandomGenes();
+            //Console.WriteLine("[{0}]", string.Join(", ", Genes));
         }
 
     }
@@ -45,9 +46,39 @@ public class Chromosome<T>
         // create new child Chromosome with same gene array size as parent
         Chromosome<T> child = new Chromosome<T>(Genes.Length, random, getRandomGenes, fitnessFunction, shouldInitGenes: false);
 
-        for (int i = 0; i < Genes.Length; i++)
+        //for (int i = 0; i < Genes.Length; i++)
+        //{
+        //    child.Genes[i] = random.NextDouble() < 0.5 ? Genes[i] : otherParent.Genes[i];
+        //}
+
+
+        double prob;
+
+        if (Genes == otherParent.Genes)
         {
-            child.Genes = random.NextDouble() < 0.5 ? Genes : otherParent.Genes;
+            child.Genes = Genes;
+        }
+        else
+        {
+            for (int i = 0; i < Genes.Length; i++)
+            {
+                if (Fitness < otherParent.Fitness)
+                {
+                    // If parent 1 has better fitness
+                    // Higher probability to take gene from parent 1
+                    prob = (double)otherParent.Fitness / (Fitness + otherParent.Fitness);
+                    //Console.WriteLine("Fitness = {0} < otherParent.Fitness = {1}, prob = {2}", Fitness, otherParent.Fitness, prob);
+
+                    child.Genes[i] = random.NextDouble() < prob ? Genes[i] : otherParent.Genes[i];
+                }
+                else
+                {
+                    prob = (double)Fitness / (Fitness + otherParent.Fitness);
+                    //Console.WriteLine("Fitness = {0} > otherParent.Fitness = {1}, prob = {2}", Fitness, otherParent.Fitness, prob);
+                    child.Genes[i] = random.NextDouble() < prob ? Genes[i] : otherParent.Genes[i];
+                }
+
+            }
         }
 
         return child;
