@@ -1,0 +1,2 @@
+C:\Users\jakka\Projects\FYP\Simple Assignment\SimpleAssignment\obj\Debug\SimpleAssignment.csprojAssemblyReference.cache
+C:\Users\jakka\Projects\FYP\Simple Assignment\SimpleAssignment\obj\Debug\SimpleAssignment.csproj.CoreCompileInputs.cache
