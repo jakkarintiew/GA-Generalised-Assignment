@@ -8,8 +8,8 @@ public class Assignment
     public int num_jobs { get; private set; }
     private int[] assignment;
 
-    private int populationSize = 500;
-    private float mutationRate = 0.05f;
+    private int populationSize = 1000;
+    private float mutationRate = 0.02f;
     private int elitism = 5;
 
     // Create an instance of GeneticAlgorithm class
@@ -86,7 +86,7 @@ public class Assignment
         // Array of n jobs, each element could be a worker index, i
         assignment = new int[num_jobs];
 
-        ////For 1 - to - 1 assignment:
+        ////For 1-to-1 assignment:
         ////initate as a sorted array of[0, 1, 2, ..., m, 0, 1, ... ]
         //for (int j = 0; j < num_jobs; j++)
         //{
@@ -106,7 +106,7 @@ public class Assignment
 
         for (int j = 0; j < num_jobs; j++)
         {
-            assignment[j] = random.Next(num_workers);
+            assignment[j] = random.Next(0, num_workers);
         }
 
         return assignment;

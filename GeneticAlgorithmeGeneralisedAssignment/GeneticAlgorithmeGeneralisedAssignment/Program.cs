@@ -35,12 +35,12 @@ namespace GeneticAlgorithmeGeneralisedAssignment
                 Console.WriteLine("Number of workers: {0}", asmt.num_workers);
                 Console.WriteLine("Number of jobs: {0}\n", asmt.num_jobs);
 
-                // Initialize csv writer
-                string filePath = @"..\..\..\out.csv";
-                File.Delete(filePath);
-                var csv = new StringBuilder();
-                var newLine = string.Format("Generation,Fitness");
-                csv.AppendLine(newLine);
+                //// Initialize csv writer
+                //string filePath = @"..\..\..\out.csv";
+                //File.Delete(filePath);
+                //var csv = new StringBuilder();
+                //var newLine = string.Format("Generation,Fitness");
+                //csv.AppendLine(newLine);
 
                 // Update algorithm until stopping conditions are met
                 while (asmt.ga.Generation < max_generations && asmt.ga.BestFitness > solution || asmt.ga.BestFitness == 0)
@@ -61,9 +61,9 @@ namespace GeneticAlgorithmeGeneralisedAssignment
                     // Update 
                     asmt.Update();
 
-                    // Append to csv
-                    newLine = string.Format("{0},{1}", asmt.ga.Generation, asmt.ga.BestFitness);
-                    csv.AppendLine(newLine);
+                    //// Append to csv
+                    //newLine = string.Format("{0},{1}", asmt.ga.Generation, asmt.ga.BestFitness);
+                    //csv.AppendLine(newLine);
                 }
 
                 Console.CursorVisible = true;
@@ -82,8 +82,8 @@ namespace GeneticAlgorithmeGeneralisedAssignment
                 Console.WriteLine("RunTime: " + elapsedTime);
                 Console.WriteLine("=============================\n");
 
-                // Save as csv
-                File.AppendAllText(filePath, csv.ToString());
+                //// Save as csv
+                //File.AppendAllText(filePath, csv.ToString());
 
                 PrintColourMessage(ConsoleColor.Green, "SOLVED!!!");
 

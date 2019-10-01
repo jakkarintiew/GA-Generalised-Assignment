@@ -128,7 +128,6 @@ public class GA<T>
 
     public void CalculateFitness()
     {
-        // initialize fitnessSum to be 0
         // initialize best individual to be the first element of the Population
         Chromosome<T> best = Population[0];
         best.CalculateFitness(0);
@@ -149,7 +148,6 @@ public class GA<T>
         best.Genes.CopyTo(BestGenes, 0);
     }
 
-    // Chosse parent by randomly choose from Population
     private Chromosome<T> ChooseParent()
     {
         // Tournoment selection
@@ -159,9 +157,7 @@ public class GA<T>
 
         for (int i = 0; i < num_competitors; i++)
         {            
-            rand_selection = Population[random.Next(Population.Count)];
-
-            //Console.WriteLine(ind.Fitness);
+            rand_selection = Population[random.Next(0, Population.Count)];
 
             if (best == null || rand_selection.Fitness < best.Fitness)
             {

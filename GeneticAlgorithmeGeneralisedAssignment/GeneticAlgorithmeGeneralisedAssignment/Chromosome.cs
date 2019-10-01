@@ -29,12 +29,11 @@ public class Chromosome<T>
         if (shouldInitGenes)
         {
             Genes = getRandomGenes();
-            //Console.WriteLine("[{0}]", string.Join(", ", Genes));
         }
 
     }
 
-    public double CalculateFitness(int index)
+    public int CalculateFitness(int index)
     {
         Fitness = fitnessFunction(index);
         return Fitness;
@@ -43,15 +42,8 @@ public class Chromosome<T>
     // Crossover function
     public Chromosome<T> Crossover(Chromosome<T> otherParent)
     {
-        // create new child Chromosome with same gene array size as parent
+        // create new child Chromosome with same gene array size as parent; improve performance by setting shouldInitGenes: false
         Chromosome<T> child = new Chromosome<T>(Genes.Length, random, getRandomGenes, fitnessFunction, shouldInitGenes: false);
-
-        //for (int i = 0; i < Genes.Length; i++)
-        //{
-        //    child.Genes[i] = random.NextDouble() < 0.5 ? Genes[i] : otherParent.Genes[i];
-        //}
-
-
         double prob;
 
         if (Genes == otherParent.Genes)
@@ -67,14 +59,11 @@ public class Chromosome<T>
                     // If parent 1 has better fitness
                     // Higher probability to take gene from parent 1
                     prob = (double)otherParent.Fitness / (Fitness + otherParent.Fitness);
-                    //Console.WriteLine("Fitness = {0} < otherParent.Fitness = {1}, prob = {2}", Fitness, otherParent.Fitness, prob);
-
                     child.Genes[i] = random.NextDouble() < prob ? Genes[i] : otherParent.Genes[i];
                 }
                 else
                 {
                     prob = (double)Fitness / (Fitness + otherParent.Fitness);
-                    //Console.WriteLine("Fitness = {0} > otherParent.Fitness = {1}, prob = {2}", Fitness, otherParent.Fitness, prob);
                     child.Genes[i] = random.NextDouble() < prob ? Genes[i] : otherParent.Genes[i];
                 }
 
@@ -84,7 +73,7 @@ public class Chromosome<T>
         return child;
     }
 
-    // Mutation function
+    // Mutation function: simply get a random new gene
     public void Mutate(float mutationRate)
     {
 
