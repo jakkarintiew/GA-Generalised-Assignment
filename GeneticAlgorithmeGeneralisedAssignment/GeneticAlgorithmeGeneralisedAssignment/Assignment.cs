@@ -3,13 +3,13 @@
 public class Assignment
 {
 
-    private int[,] costs;
+    public int[,] costs;
     public int num_workers { get; private set; }
     public int num_jobs { get; private set; }
     private int[] assignment;
 
     private int populationSize = 500;
-    private float mutationRate = 0.10f;
+    private float mutationRate = 0.05f;
     private int elitism = 5;
 
     // Create an instance of GeneticAlgorithm class
@@ -66,12 +66,6 @@ public class Assignment
         num_workers = costs.GetLength(0);
         num_jobs = costs.GetLength(1);
 
-        Console.WriteLine("====== Assignment Problem Description ======");
-        Console.WriteLine("Costs matrix: ");
-        Print2DArray(costs);
-        Console.WriteLine("Number of workers: {0}", num_workers);
-        Console.WriteLine("Number of jobs: {0}\n\n\n", num_jobs);
-
     }
 
     public void Start()
@@ -85,12 +79,6 @@ public class Assignment
     public void Update()
     {
         ga.NewGeneration();
-
-        //Console.WriteLine("====== Generation: {0} ======", ga.Generation);
-        //Console.WriteLine("Assignment: {0}", String.Join(", ", ga.BestGenes));
-        //Console.WriteLine("Best Fitness Score (cost): {0}", ga.BestFitness);
-        //Console.WriteLine("Best Population Count: {0}", ga.Population.Count);
-        //Console.WriteLine("=============================\n");
     }
 
     private int[] GetRandomAssignment()
@@ -138,15 +126,5 @@ public class Assignment
         return fitness;
     }
 
-    public static void Print2DArray<T>(T[,] matrix)
-    {
-        for (int i = 0; i < matrix.GetLength(0); i++)
-        {
-            for (int j = 0; j < matrix.GetLength(1); j++)
-            {
-                Console.Write(matrix[i, j] + "\t");
-            }
-            Console.WriteLine();
-        }
-    }
+    
 }
