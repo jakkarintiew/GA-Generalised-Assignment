@@ -3,7 +3,7 @@
 Genetic Algorithm Generalised Assignment Problem (GAP) Solver, C# Implementation.
 
 ## Generalised Assignment Problem
-Given m workers and n xobs with:
+Given m workers and n jobs with:
 
 > _p<sub>ij</sub>_ = cost of job<sub>_j_</sub> assigned to worker<sub>_i_</sub>, 
 >
