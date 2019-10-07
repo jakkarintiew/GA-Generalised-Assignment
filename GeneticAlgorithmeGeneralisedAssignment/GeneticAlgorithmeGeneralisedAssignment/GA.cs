@@ -81,14 +81,20 @@ public class GA<T>
 
                 child.Mutate(MutationRate);
 
-                //Console.WriteLine("parent1 fitness: " + parent1.Fitness);
-                //Console.WriteLine("parent1 Assignment: [ {0} ]\n", string.Join(", ", parent1.Genes));
+                //int print = random.Next(50000);
 
-                //Console.WriteLine("parent2 fitness: " + parent2.Fitness);
-                //Console.WriteLine("parent2 Assignment: [ {0} ]\n", string.Join(", ", parent2.Genes));
+                //if (print == 1)
+                //{
+                //    Console.WriteLine("parent1 fitness: " + parent1.Fitness);
+                //    Console.WriteLine("parent1 Assignment: [ {0} ]\n", string.Join(", ", parent1.Genes));
 
-                //Console.WriteLine("child fitness: " + child.Fitness);
-                //Console.WriteLine("child Assignment: [ {0} ]\n\n", string.Join(", ", child.Genes));
+                //    Console.WriteLine("parent2 fitness: " + parent2.Fitness);
+                //    Console.WriteLine("parent2 Assignment: [ {0} ]\n", string.Join(", ", parent2.Genes));
+
+                //    Console.WriteLine("child fitness: " + child.Fitness);
+                //    Console.WriteLine("child Assignment: [ {0} ]\n\n", string.Join(", ", child.Genes));
+                //}
+
 
                 newPopulation.Add(child);
             }
@@ -156,7 +162,7 @@ public class GA<T>
         Chromosome<T> best = null;
 
         for (int i = 0; i < num_competitors; i++)
-        {            
+        {
             rand_selection = Population[random.Next(0, Population.Count)];
 
             if (best == null || rand_selection.Fitness < best.Fitness)

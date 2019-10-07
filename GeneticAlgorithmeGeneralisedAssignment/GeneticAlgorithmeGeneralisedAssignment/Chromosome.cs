@@ -33,7 +33,7 @@ public class Chromosome<T>
 
     }
 
-    public int CalculateFitness(int index)
+    public double CalculateFitness(int index)
     {
         Fitness = fitnessFunction(index);
         return Fitness;
@@ -48,6 +48,7 @@ public class Chromosome<T>
 
         if (Genes == otherParent.Genes)
         {
+            // might get stuck here as all individuals in population become the same
             child.Genes = Genes;
         }
         else
